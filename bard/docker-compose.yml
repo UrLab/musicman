@@ -1,5 +1,5 @@
 services:
-  navidrome:
+  bard:
     image: docker.io/deluan/navidrome:latest
     ports:
       - "4533:4533"

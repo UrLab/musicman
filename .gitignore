@@ -1,3 +1,5 @@
 **/.venv/*
 **/.env
+bard/music/**
+bard/navidrome/**
 
