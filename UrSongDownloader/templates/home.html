@@ -1,0 +1,19 @@
+<!-- templates/home.html -->
+<h1>UrSongDownloader</h1>
+
+<form method="GET" action="{% url 'home' %}">
+    <input type="text" name="q" placeholder="Link" value="{{ video_url }}">
+    <button type="submit">Rechercher</button>
+</form>
+
+<hr>
+
+{% if video_info.title %}
+    <h2>{{ video_info.title }}</h2>
+    <p><strong>Author :</strong> {{ video_info.author }}</p>
+    <p><strong>Views :</strong> {{ video_info.views }}</p>
+    <p><strong>Duration :</strong> {{ video_info.length }} secondes</p>
+    <img src="{{ video_info.thumbnail_url }}" alt="Minia" width="320">
+{% elif video_info.error %}
+    <p style="color: red;">{{ video_info.error }}</p>
+{% endif %}
