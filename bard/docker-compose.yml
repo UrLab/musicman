@@ -10,6 +10,7 @@ services:
       ND_LOGLEVEL: info  
       ND_SESSIONTIMEOUT: 24h
       ND_BASEURL: ""
+      Jukebox.Enabled: true
     volumes:
       - "./navidrome/data:/data"
       - "./music:/music:ro"
