@@ -20,8 +20,20 @@ class Downloader:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             error_code = ydl.download(url)
 
+    def get_info(self, url):
+
+        ydl_opts = {}
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            info = ydl.extract_info(url, download=False) 
+
+        print("Title:", info.get('title'))
+        print("Uploader:", info.get('uploader'))
+        print("Upload date:", info.get('upload_date'))
+        print("View count:", info.get('view_count'))
+        print("Description:", info.get('description'))
+
 # If you want to try without the web interface
 if __name__ == "__main__":
     pass
-    #dld = UrDownloader()
-    #dld.download("https://www.youtube.com/watch?v=Ktv5dIBlvQ8", "opus", ".")
+    dld = Downloader()
+    dld.download("https://www.youtube.com/watch?v=Ktv5dIBlvQ8")
