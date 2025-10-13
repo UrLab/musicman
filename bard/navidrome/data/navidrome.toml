@@ -1,5 +1,0 @@
-LogLevel = "debug"
-Scanner.Schedule = "@every 1h"
-SessionTimeout = "24h"
-Jukebox.Enabled = true
-

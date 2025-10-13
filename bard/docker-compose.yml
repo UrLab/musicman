@@ -1,21 +1,17 @@
 services:
-  bard:
-    image: bard
+  mopidy:
     build: .
-    ports:
-      - "4533:4533"
-    expose:
-      - 4533
-    user: 1000:1000
-    container_name: bard
+    container_name: bard 
     restart: unless-stopped
+    ports:
+      - "6680:6680"
+      - "6600:6600"
+    volumes:
+      - ./music:/var/lib/mopidy/media:ro
+      - ./data:/var/lib/mopidy/local
+      - ./config:/config
     environment:
-      ND_CONFIGFILE: "/data/navidrome.toml"
-    group_add:
-      - "29"
+      - MOPIDY_CONFIG=/config/mopidy.conf
     devices:
       - "/dev/snd:/dev/snd"
-    volumes:
-      - "./navidrome/data:/data"
-      - "./music:/music:ro"
 
