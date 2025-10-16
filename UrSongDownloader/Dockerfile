@@ -1,7 +1,18 @@
-FROM python3:alpine
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-COPY . .
-CMD ["python3", "main.py"]
+FROM alpine:3.14
 
+WORKDIR /app
+
+RUN apk add --no-cache python3 py3-pip
+
+
+COPY src/ ./src/
+
+RUN python3 -m venv /app/.venv
+ENV PATH="/app/.venv/bin:$PATH"
+
+RUN pip install --no-cache-dir --upgrade pip \
+    && pip install --no-cache-dir -r src/requirements.txt
+
+EXPOSE 8000
+
+CMD ["python3", "src/manage.py", "runserver", "0.0.0.0:8000"]

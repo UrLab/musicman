@@ -1,0 +1,11 @@
+services:
+  urdownloader:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: urdownloader
+    working_dir: /app
+    volumes:
+      - ./music:/app/music
+    ports:
+      - "3000:8000"   
