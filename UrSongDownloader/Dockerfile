@@ -2,7 +2,7 @@ FROM alpine:3.14
 
 WORKDIR /app
 
-RUN apk add --no-cache python3 py3-pip
+RUN apk add --no-cache python3 py3-pip tzdata
 
 
 COPY src/ ./src/
@@ -13,6 +13,9 @@ ENV PATH="/app/.venv/bin:$PATH"
 RUN pip install --no-cache-dir --upgrade pip \
     && pip install --no-cache-dir -r src/requirements.txt
 
+RUN /app/.venv/bin/python3 src/manage.py migrate
+
 EXPOSE 8000
 
 CMD ["python3", "src/manage.py", "runserver", "0.0.0.0:8000"]
+
