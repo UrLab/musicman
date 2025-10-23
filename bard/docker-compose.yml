@@ -1,16 +1,17 @@
 services:
-  bard:
-    image: docker.io/deluan/navidrome:latest
-    ports:
-      - "4533:4533"
+  mopidy:
+    build: .
+    container_name: bard 
     restart: unless-stopped
-    environment:
-      # Optional: put your config options customization here. Examples:
-      ND_SCANSCHEDULE: 1h
-      ND_LOGLEVEL: info  
-      ND_SESSIONTIMEOUT: 24h
-      ND_BASEURL: ""
+    ports:
+      - "6680:6680"
+      - "6600:6600"
     volumes:
-      - "./navidrome/data:/data"
-      - "./music:/music:ro"
+      - ./music:/var/lib/mopidy/media:ro
+      - ./data:/var/lib/mopidy/local
+      - ./config:/config
+    environment:
+      - MOPIDY_CONFIG=/config/mopidy.conf
+    devices:
+      - "/dev/snd:/dev/snd"
 
