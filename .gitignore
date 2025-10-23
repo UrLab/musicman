@@ -2,4 +2,5 @@
 **/.env
 bard/music/**
 bard/navidrome/**
-
+__pycache__
+*.sqlite3
