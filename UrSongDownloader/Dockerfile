@@ -2,8 +2,7 @@ FROM alpine:3.14
 
 WORKDIR /app
 
-RUN apk add --no-cache python3 py3-pip tzdata
-
+RUN apk add --no-cache python3 py3-pip tzdata ffmpeg
 
 COPY src/ ./src/
 

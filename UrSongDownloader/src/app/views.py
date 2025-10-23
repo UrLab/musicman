@@ -19,6 +19,7 @@ def format_duration(seconds):
 def home(request):
     v_url = request.GET.get('q', '').strip()
     v_info = {}
+    video_info = {}
 
     if v_url:
         v_url = check_ytb_url(v_url)
@@ -28,26 +29,26 @@ def home(request):
                 'quiet': True,
                 'skip_download': True,
                 'force_generic_extractor': True,
-                'extract_flat': True,  
+                'extract_flat': True,
             }
 
             with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                 info = ydl.extract_info(v_url, download=False)
 
-                v_info = {
-                    'title': info.get('title'),
-                    'author': info.get('uploader'),
-                    'views': info.get('view_count'),
-                    'length': format_duration(info.get('duration')),
-                    'thumbnail_url': info.get('thumbnail'),
-                }
+            v_info = {
+                'title': info.get('title'),
+                'author': info.get('uploader'),
+                'views': info.get('view_count'),
+                'length': format_duration(info.get('duration')),
+                'thumbnail_url': info.get('thumbnail'),
+            }
+
+            download(v_url)
 
         except Exception as e:
-            video_info = {'error': f"Failed to fetch: {str(e)}"}
+            v_info = {'error': f"Failed to fetch: {str(e)}"}
     else:
-        video_info = {'error': "URL not valid."}
-
-    download(v_url)
+        v_info = {'error': "URL not valid."}
 
     return render(request, 'home.html', {
         'video_url': v_url,
