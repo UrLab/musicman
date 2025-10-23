@@ -7,7 +7,7 @@ services:
       - "6680:6680"
       - "6600:6600"
     volumes:
-      - ./music:/var/lib/mopidy/media:ro
+      - ../music:/var/lib/mopidy/media:ro
       - ./data:/var/lib/mopidy/local
       - ./config:/config
     environment:
