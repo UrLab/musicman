@@ -1,19 +1,31 @@
 import json
 import yt_dlp
+import os
 
 
-def download(url: str, codec="opus", path="./audio", max_size="128"):
+
+def download(url: str, codec="opus", path="./music", max_size="128"):
     ydl_opts = {
         'format': f'bestaudio[abr<={max_size}]',
-        'outmpl': '%(title)s.%(ext)s',
-        'postprocessors': [{  
+        'outtmpl': os.path.join(path, '%(title)s.%(ext)s'),
+        'postprocessors': [{
             'key': 'FFmpegExtractAudio',
-            'preferredcodec': f'{codec}',
-        }]
+            'preferredcodec': codec,
+            'preferredquality': '0',
+        }],
+        'quiet': False,
+        'noplaylist': True,
     }
 
-    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-        error_code = ydl.download(url)
+    try:
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            info = ydl.extract_info(url, download=True)
+            filename = ydl.prepare_filename(info)
+            return filename
+
+    except Exception as e:
+        print(f"Error downloading {url}: {e}")
+        return None
 
 # If you want to try without the web interface
 if __name__ == "__main__":
